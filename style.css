@@ -1,0 +1,82 @@
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+/* Introduction part */
+
+.intro{
+    background-color: black;
+    color: gold; 
+}
+
+.intro p{
+    font-style: italic;
+}
+
+.heading{
+    padding: 10px;
+    line-height:2 ;
+}
+
+
+/* Table style */
+
+.table_title {
+    text-align: center;
+}
+
+.table_title{
+    text-decoration: underline;
+}
+
+table{
+    margin-top:10px;
+}
+
+.table th  {
+    text-align: center;
+    color: aqua;
+    font-size: 1.5rem;
+} 
+
+.table th td {
+    text-align: center;
+} 
+
+.table td{
+    padding-top: 30px;
+}
+
+#table-body{
+    color: gold; 
+    text-align: center;
+}
+
+/* Button Styling */
+
+.btn {
+  background-color:gold !important;
+  font-weight: bold !important;
+}
+
+.btn {
+    margin: 5px; 
+}
+
+.wrapper_down{
+    margin-bottom: 100px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
