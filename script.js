@@ -156,7 +156,7 @@ request.onload = function () {
                 for (var currentPage = maxLeft; currentPage <= maxRight; currentPage++) {
                     wrapper.innerHTML += `<button value=${currentPage} class="currentPage btn btn-sm ">${currentPage}</button>`
                 }
-                wrapper.innerHTML += `<button value=${objectData.nextPage} class="currentPage btn btn-sm ">nextPage  &#187;</button>`;
+                wrapper.innerHTML += `<button value=${objectData.nextPage} class="currentPage btn btn-sm "> Next &#187;</button>`;
 
                 if (objectData.currentPage != 1) {
                     wrapper.innerHTML = `<button value=${1} class="currentPage btn btn-sm ">First</button>${wrapper.innerHTML}`
