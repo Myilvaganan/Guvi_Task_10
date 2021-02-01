@@ -175,7 +175,7 @@ request.onload = function () {
                         objectData.currentPage = pageNumber;
                         objectData.previousPage = (pageNumber == 1) ? 1 : (pageNumber - 1);
                         objectData.nextPage = (pageNumber == pages) ? (pages) : (pageNumber + 1);
-                        console.log(objectData.previousPage, objectData.nextPage);
+                        console.log('Previous Page Number: '+ objectData.previousPage,'Current Page Number: '+objectData.currentPage, 'Next Page Number: '+objectData.nextPage);
                         tableUpdation();
                     });
                 });
