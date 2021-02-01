@@ -14,13 +14,14 @@ request.onload = function () {
 
 /* object creation for pagination */
 
-   var state = {
-        'querySet': tableData,
-        'page': 1,
-        'prev': 1,
-        'next': 2,
-        'rows': 5,
-        'window': 5,
+   var objectData = {
+       
+        'dataSet': tableData,
+        'currentPage': 1,
+        'previousPage': 1,
+        'nextPage': 2,
+        'rowsPerPage': 5,
+        'dataShownPerPage': 5,
     }
 
 
@@ -90,7 +91,7 @@ request.onload = function () {
         /* Table- Head */
 
         var table_body = document.createElement("tbody");
-        table_body.setAttribute("id", "table-body");
+        table_body.setAttribute("id", "tableBody");
             
     tab.append(table_head, table_body);
 
@@ -107,43 +108,43 @@ request.onload = function () {
 
         /* invoking table creation function */
 
-           buildTable();
+           tableUpdation();
 
-           /* TRIMMING ONLY 10 DATA TO BE SHOWN IN SINGLE PAGE */
+           /* TRIMMING ONLY 10 DATA TO BE SHOWN IN SINGLE currentPage */
 
-            function pagination(querySet, page, rows) {
+            function pagination(dataSet, currentPage, rowsPerPage) {
                
-                var trimStart = (page - 1) * rows; 
-                var trimEnd = trimStart + rows;
+                var trimStart = (currentPage - 1) * rowsPerPage; 
+                var trimEnd = trimStart + rowsPerPage;
 
-                var trimmedData = querySet.slice(trimStart, trimEnd);
+                var trimmedData = dataSet.slice(trimStart, trimEnd);
 
-                var pages = Math.round(querySet.length / rows);
+                var pages = Math.round(dataSet.length / rowsPerPage);
 
                 return {
-                    'querySet': trimmedData,
+                    'dataSet': trimmedData,
                     'pages': pages,
                 }
             }
 
             /* BUTTONS LOGIC */
 
-            function pageButtons(pages) {
+            function pageButtonViewer(pages) {
 
                 var wrapper = document.getElementById('pagination-wrapper');
 
                 wrapper.innerHTML = ``;
           
-                var maxLeft = (state.page - Math.floor(state.window / 2));
-                var maxRight = (state.page + Math.floor(state.window / 2));
+                var maxLeft = (objectData.currentPage - Math.floor(objectData.dataShownPerPage / 2));
+                var maxRight = (objectData.currentPage + Math.floor(objectData.dataShownPerPage / 2));
 
                 if (maxLeft < 1) {
                     maxLeft = 1
-                    maxRight = state.window
+                    maxRight = objectData.dataShownPerPage
                 }
 
                 if (maxRight > pages) {
-                    maxLeft = pages - (state.window - 1)
+                    maxLeft = pages - (objectData.dataShownPerPage - 1)
 
                     if (maxLeft < 1) {
                         maxLeft = 1
@@ -151,31 +152,31 @@ request.onload = function () {
                     maxRight = pages;
                 }
 
-                wrapper.innerHTML += `<button value=${state.prev} class="page btn btn-sm ">&#171; Previous</button>`;
-                for (var page = maxLeft; page <= maxRight; page++) {
-                    wrapper.innerHTML += `<button value=${page} class="page btn btn-sm ">${page}</button>`
+                wrapper.innerHTML += `<button value=${objectData.previousPage} class="currentPage btn btn-sm ">&#171; Previous</button>`;
+                for (var currentPage = maxLeft; currentPage <= maxRight; currentPage++) {
+                    wrapper.innerHTML += `<button value=${currentPage} class="currentPage btn btn-sm ">${currentPage}</button>`
                 }
-                wrapper.innerHTML += `<button value=${state.next} class="page btn btn-sm ">Next  &#187;</button>`;
+                wrapper.innerHTML += `<button value=${objectData.nextPage} class="currentPage btn btn-sm ">nextPage  &#187;</button>`;
 
-                if (state.page != 1) {
-                    wrapper.innerHTML = `<button value=${1} class="page btn btn-sm ">First</button>${wrapper.innerHTML}`
-                }
-
-                if (state.page != pages) {
-                    wrapper.innerHTML = `${wrapper.innerHTML}<button value=${pages} class="page btn btn-sm ">Last</button>`
+                if (objectData.currentPage != 1) {
+                    wrapper.innerHTML = `<button value=${1} class="currentPage btn btn-sm ">First</button>${wrapper.innerHTML}`
                 }
 
+                if (objectData.currentPage != pages) {
+                    wrapper.innerHTML = `${wrapper.innerHTML}<button value=${pages} class="currentPage btn btn-sm ">Last</button>`
+                }
 
-                [...document.querySelectorAll('.page')].forEach(function (item) {
+
+                [...document.querySelectorAll('.currentPage')].forEach(function (item) {
                     item.addEventListener('click', function () {
-                        debugger
-                        document.querySelector("#table-body").innerHTML = '';
-                        let pageVal = +this.value;
-                        state.page = pageVal;
-                        state.prev = (pageVal == 1) ? 1 : (pageVal - 1);
-                        state.next = (pageVal == pages) ? (pages) : (pageVal + 1);
-                        console.log(state.prev, state.next);
-                        buildTable();
+                        
+                        document.querySelector("#tableBody").innerHTML = '';
+                        let pageNumber = +this.value;
+                        objectData.currentPage = pageNumber;
+                        objectData.previousPage = (pageNumber == 1) ? 1 : (pageNumber - 1);
+                        objectData.nextPage = (pageNumber == pages) ? (pages) : (pageNumber + 1);
+                        console.log(objectData.previousPage, objectData.nextPage);
+                        tableUpdation();
                     });
                 });
 
@@ -183,28 +184,28 @@ request.onload = function () {
 
             /* Creating inner table elements - filtering only 10 data using pagination function  */
 
-            function buildTable() {
+            function tableUpdation() {
     
-                var table = document.querySelector("#table-body");
-                var data = pagination(state.querySet, state.page, state.rows);
-                var myList = data.querySet;
+                var table = document.querySelector("#tableBody");
+                var data = pagination(objectData.dataSet, objectData.currentPage, objectData.rowsPerPage);
+                var ListData = data.dataSet;
 
-                for (var i = 1 in myList) {
+                for (var i = 1 in ListData) {
 
                     var row = document.createElement("tr");
 
                     var td1 = document.createElement("td");
-                    td1.innerHTML = myList[i].id;
+                    td1.innerHTML = ListData[i].id;
 
                     var td2 = document.createElement("td");
-                    td2.innerHTML = myList[i].name;
+                    td2.innerHTML = ListData[i].name;
 
                     var td3 = document.createElement("td");
-                    td3.innerHTML = myList[i].email;
+                    td3.innerHTML = ListData[i].email;
 
                     row.append(td1, td2, td3);
-                    table_body.append(row);
+                    table.append(row);
                 }
-                pageButtons(data.pages);
+                pageButtonViewer(data.pages);
             }
 }
