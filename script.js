@@ -44,7 +44,7 @@ request.onload = function () {
     col2.setAttribute("class","col-md-8 text-center  heading");
 
     var line1 = document.createElement('h1');
-    line1.innerHTML=`Guvi Zenclass Bootcamp- Full Stack`;
+    line1.innerHTML=`Guvi Zenclass Bootcamp- Full Stack Js`;
 
     var line2 = document.createElement('h2');
     line2.innerHTML=`WD20 Batch`;
